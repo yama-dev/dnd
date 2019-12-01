@@ -16,9 +16,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -275,6 +275,7 @@ var dragStore = (_dragStore = {
    * 碰撞检测函数
    */
   collision: function collision(pageX, pageY) {
+    pageY -= window.pageYOffset;
     var targetIndex = -1;
     // 碰撞检测
     for (var i = 0; i < this.targetPositions.length; i++) {
@@ -466,7 +467,7 @@ var _store = __webpack_require__(1);
 
 var _store2 = _interopRequireDefault(_store);
 
-__webpack_require__(6);
+__webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -556,6 +557,7 @@ var Drag = function () {
           left = _mouseDownPosition.left,
           top = _mouseDownPosition.top;
 
+      var scrollTop = window.pageYOffset;
       var EMIT_LENGTH = 3;
       if (Math.abs(pageX - left) < EMIT_LENGTH && Math.abs(pageY - top) < EMIT_LENGTH) return;
       if (this.mouseDragging) return;
@@ -570,6 +572,7 @@ var Drag = function () {
       this.mark.onmousemove = this.onMarkMouseMove.bind(this);
       this.mark.onmouseup = this.onMarkMouseUp.bind(this);
       this.mark.onmouseleave = this.onMarkMouseUp.bind(this);
+      this.mark.style.top = scrollTop + 'px';
       _store2.default.markNode = this.mark;
       document.body.appendChild(this.mark);
       // 创建复制元素
@@ -1002,17 +1005,6 @@ exports.default = IMAGES;
 "use strict";
 
 
-HTMLElement.prototype.__defineGetter__('currentStyle', function () {
-  return this.ownerDocument.defaultView.getComputedStyle(this, null);
-});
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -1030,6 +1022,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.Drag = _drag2.default;
 exports.Drop = _drop2.default;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+HTMLElement.prototype.__defineGetter__('currentStyle', function () {
+  return this.ownerDocument.defaultView.getComputedStyle(this, null);
+});
 
 /***/ })
 /******/ ]);
