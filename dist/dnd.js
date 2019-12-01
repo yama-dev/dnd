@@ -551,8 +551,10 @@ var Drag = function () {
   }, {
     key: 'onElMousemove',
     value: function onElMousemove(e) {
-      var pageX = e.pageX,
-          pageY = e.pageY;
+      var _ref = e.touches && e.touches[0] || e,
+          pageX = _ref.pageX,
+          pageY = _ref.pageY;
+
       var _mouseDownPosition = this.mouseDownPosition,
           left = _mouseDownPosition.left,
           top = _mouseDownPosition.top;
@@ -619,9 +621,9 @@ var Drag = function () {
     value: function onMarkMouseMove(e) {
       if (!_store2.default.draggedNode) return;
 
-      var _ref = e.touches && e.touches[0] || e,
-          pageX = _ref.pageX,
-          pageY = _ref.pageY;
+      var _ref2 = e.touches && e.touches[0] || e,
+          pageX = _ref2.pageX,
+          pageY = _ref2.pageY;
 
       var translateX = pageX - this.mouseDownPosition.left;
       var translateY = pageY - this.mouseDownPosition.top;
@@ -663,12 +665,13 @@ var Drag = function () {
         this.mouseDownPosition.left = pageX;
         this.mouseDownPosition.top = pageY;
       }
-      this.onElMousemove();
+      this.onElMousemove(e);
       this.onMarkMouseMove(e);
     }
   }, {
     key: 'onElTouchEnd',
     value: function onElTouchEnd(e) {
+      this.onElMouseUp();
       this.onMarkMouseUp();
     }
 
