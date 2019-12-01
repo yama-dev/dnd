@@ -149,6 +149,7 @@ const dragStore = {
    * 碰撞检测函数
    */
   collision (pageX, pageY) {
+    pageY -= window.pageYOffset
     let targetIndex = -1
     // 碰撞检测
     for (var i = 0; i < this.targetPositions.length; i++) {

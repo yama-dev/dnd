@@ -60,8 +60,9 @@ class Drag {
    * 监听拖动开始
    */
   onElMousemove (e) {
-    let {pageX, pageY} = e
+    let {pageX, pageY} = e.touches && e.touches[0] || e
     let {left, top} = this.mouseDownPosition
+    let scrollTop = window.pageYOffset
     const EMIT_LENGTH = 3
     if (Math.abs(pageX - left) < EMIT_LENGTH && Math.abs(pageY - top) < EMIT_LENGTH) return
     if (this.mouseDragging) return
@@ -76,6 +77,7 @@ class Drag {
     this.mark.onmousemove = this.onMarkMouseMove.bind(this)
     this.mark.onmouseup = this.onMarkMouseUp.bind(this)
     this.mark.onmouseleave = this.onMarkMouseUp.bind(this)
+    this.mark.style.top = scrollTop+'px'
     store.markNode = this.mark
     document.body.appendChild(this.mark)
     // 创建复制元素
@@ -150,11 +152,12 @@ class Drag {
       this.mouseDownPosition.left = pageX
       this.mouseDownPosition.top = pageY
     }
-    this.onElMousemove()
+    this.onElMousemove(e)
     this.onMarkMouseMove(e)
   }
 
   onElTouchEnd (e) {
+    this.onElMouseUp()
     this.onMarkMouseUp()
   }
 

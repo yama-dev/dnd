@@ -5,6 +5,7 @@
   "main": "dist/dnd.js",
   "scripts": {
     "dev": "webpack --watch",
+    "production": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
